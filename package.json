@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "react-tools": "~0.5.1",
-    "react-app": "~0.8.1"
+    "react-app": "~0.8.1",
+    "lodash": "~2.3.0"
   }
 }

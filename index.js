@@ -1,3 +1,4 @@
+var fs = require('fs');
 var ReactApp = require('react-app');
 var express = require('express');
 
@@ -37,29 +38,14 @@ function createUI(options) {
 
 function createApp(options) {
   var app = express();
-  app.get('/frame', function(req, res) {
-    res.send([
-      '<!doctype>',
-      '<html>',
-      '<head>',
-      '<script>',
-      '  window.addEventListener("message", function (e) {',
-      '    var mainWindow = e.source;',
-      '    var result = "";',
-      '    try {',
-      '      result = eval(e.data);',
-      '    } catch (e) {',
-      '      result = "eval() threw an exception:" + e.toString();',
-      '    }',
-      '    mainWindow.postMessage(result, event.origin);',
-      '  });',
-      '</script>',
-      '</head>',
-      '<body>',
-      '</body>',
-      '</html>'
-    ].join('\n'));
+
+  app.get('/frame', function(req, res, next) {
+    fs.readFile(require.resolve('./ui/agent.js'), 'utf8', function(err, src) {
+      if (err) return next(err);
+      res.send('<!doctype html><script>' + src + '</script>');
+    })
   });
+
   app.use(createUI(options));
   app.use('/api', createAPI(options));
   app.use('/auth', createAuth(options));

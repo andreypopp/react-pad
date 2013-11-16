@@ -1,6 +1,7 @@
 var React = require('react-tools/build/modules/React');
 var cx = require('react-tools/build/modules/cx');
 var Editor = require('./editor.jsx');
+var map = require('lodash').map;
 
 var Button = React.createClass({
   render: function() {
@@ -34,21 +35,24 @@ module.exports = React.createClass({
     this.setState({active: id});
   },
 
-  onChange: function(file, value) {
-    file.value = value;
+  onChange: function(file, content) {
+    file.content = content;
     if (this.props.onChange) this.props.onChange(file);
   },
 
   render: function() {
     var active = this.state.active ||
       this.props.active ||
-      this.props.files[0].filename;
+      'example.jsx';
 
-    var tabs = this.props.files.map(function(file) {
-      return {id: file.filename, name: file.displayName || file.filename};
+    var tabs = map(this.props.files, function(file) {
+      return {
+        id: file.filename,
+        name: file.displayName ? (file.displayName + ' (' + file.filename + ')') : file.filename
+      };
     });
 
-    var editors = this.props.files.map(function(file) {
+    var editors = map(this.props.files, function(file) {
       var className = cx({
         'MultiEditor__Editor': true,
         'MultiEditor__Editor--active': active === file.filename

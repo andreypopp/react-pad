@@ -1,37 +1,32 @@
 var ReactApp = require('react-app');
 var React = require('react-tools/build/modules/React');
 
-var MultiEditor= require('./multi-editor.jsx');
+var MultiEditor = require('./multi-editor.jsx');
+var Scene = require('./scene.jsx');
 
 require('./index.css');
-
-var Scene = React.createClass({
-  render: function() {
-    return this.transferPropsTo(
-      <div className="Scene">
-        <iframe src="/frame" ref="frame"></iframe>
-      </div>
-    );
-  },
-
-  update: function() {
-    var frame = this.refs.frame.getDOMNode();
-    frame.contentWindow.postMessage(this.props.value, '*');
-  },
-
-  componentDidMount: function() {
-    this.update();
-  },
-
-  componentDidUpdate: function() {
-    this.update();
-  }
-});
 
 var EditorPage = ReactApp.createPage({
 
   getInitialState: function() {
-    return {value: 'var React = require("react-core");'};
+    var files = {
+      'example.jsx': {
+        filename: 'example.jsx',
+        displayName: 'example',
+        content: '<Component>Hello, world</Component>'
+      },
+      'index.jsx': {
+        filename: 'index.jsx',
+        displayName: 'component',
+        content: "var React = require('react-core');\n\nmodule.exports = React.createClass({});\n"
+      },
+      'index.css': {
+        filename: 'index.css',
+        displayName: 'styles',
+        content: ".Component {\n  font-weight: bold;\n}"
+      }
+    }
+    return {files: files};
   },
 
   onChange: function(value) {
@@ -39,30 +34,17 @@ var EditorPage = ReactApp.createPage({
   },
 
   render: function() {
-    var files = [
-      {
-        filename: 'example.jsx',
-        displayName: 'Example',
-        content: '<Component>Hello, world</Component>'
-      },
-      {
-        filename: 'index.jsx',
-        displayName: 'Component',
-        content: "var React = require('react-core');\n\nmodule.exports = React.createClass({});\n"
-      },
-      {
-        filename: 'index.css',
-        displayName: 'Styles',
-        content: ".Component {\n  font-weight: bold;\n}"
-      }
-    ];
     return (
       <div className="EditorPage">
-        <Scene className="EditorPage__Scene" value={this.state.value || ''} />
+        <Scene className="EditorPage__Scene"
+          example={this.state.files['example.jsx']}
+          component={this.state.files['index.jsx']}
+          styles={this.state.files['index.css']}
+          value={this.state.value || ''}
+          />
         <MultiEditor
           className="EditorPage__Editor"
-          files={files}
-          value={this.state.value}
+          files={this.state.files}
           onChange={this.onChange} />
       </div>
     );
