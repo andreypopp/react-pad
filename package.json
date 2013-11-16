@@ -1,0 +1,34 @@
+{
+  "name": "react-pad",
+  "version": "0.0.0",
+  "description": "Authoring tool for React components",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R specs ./specs/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "andreypopp/react-pad"
+  },
+  "keywords": [
+    "react",
+    "jsfiddle",
+    "authoring",
+    "components",
+    "ui",
+    "collaborative"
+  ],
+  "author": "Andrey Popp <8mayday@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "semver": "~2.2.1",
+    "mocha": "~1.14.0",
+    "jshint": "~2.3.0",
+    "normalize-css": "~2.2.0",
+    "detective": "~2.2.0"
+  },
+  "dependencies": {
+    "react-tools": "~0.5.1",
+    "react-app": "~0.8.1"
+  }
+}

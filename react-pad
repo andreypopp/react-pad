@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+"use strict";
+// vim: set ft=javascript:
+
+var createApp = require('./index');
+var app = createApp({
+  debug: true,
+  watch: true
+});
+
+app.listen(3000);
