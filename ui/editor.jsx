@@ -35,8 +35,23 @@ module.exports = React.createClass({
   },
 
   onChange: function() {
+    var value = this.cm.getValue();
+
     if (this.props.onChange)
-      this.props.onChange(this.cm.getValue());
+      this.props.onChange(value);
+
+    if (this.props.validate) {
+      var error;
+      try {
+        this.props.validate(value);
+      } catch(err) {
+        error = err;
+      }
+      if (error !== undefined && this.props.onError)
+        this.props.onError(error)
+      else if (error === undefined && this.props.onUpdate)
+        this.props.onUpdate(value);
+    }
   },
 
   render: function() {

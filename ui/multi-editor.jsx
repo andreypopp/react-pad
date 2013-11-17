@@ -1,7 +1,7 @@
 var React = require('react-tools/build/modules/React');
 var cx = require('react-tools/build/modules/cx');
-var Editor = require('./editor.jsx');
 var map = require('lodash').map;
+var Editor = require('./editor.jsx');
 
 var Button = React.createClass({
   render: function() {
@@ -62,7 +62,11 @@ module.exports = React.createClass({
           <div className="MultiEditor__Editor__filename">
             {file.filename}
           </div>
-          <Editor value={file.content || ''} onChange={this.onChange.bind(null, file)} />
+          <Editor value={file.content || ''}
+            validate={this.props.validate && this.props.validate.bind(null, file)}
+            onError={this.props.onError && this.props.onError.bind(null, file)}
+            onUpdate={this.props.onUpdate && this.props.onUpdate.bind(null, file)}
+            onChange={this.onChange.bind(null, file)} />
         </div>
       );
     }.bind(this));

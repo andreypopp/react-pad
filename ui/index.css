@@ -99,15 +99,36 @@ body {
 }
 
 .EditorPage__Scene {
-  font-family: Menlo, Monaco, monospace;
   height: 50%;
   width: 100%;
+  position: relative;
 }
 .EditorPage__Scene iframe {
   width: 100%;
   height: 100%;
   border: none;
   background: white;
+}
+
+.Errors {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 226, 226);
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+}
+
+.Errors__Error {
+  padding: 2em;
+}
+
+.Errors__filename {
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 768px) {

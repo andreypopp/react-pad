@@ -5,7 +5,6 @@ function update(data) {
 
 function updateStyles(styles) {
   var host = document.getElementById('styles');
-  console.log('x');
   if (!host) {
     host = document.createElement('style');
     host.id = 'styles';

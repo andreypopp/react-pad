@@ -1,5 +1,6 @@
 var ReactApp = require('react-app');
 var React = require('react-tools/build/modules/React');
+var detective = require('detective');
 
 var MultiEditor = require('./multi-editor.jsx');
 var Scene = require('./scene.jsx');
@@ -26,17 +27,37 @@ var EditorPage = ReactApp.createPage({
         content: ".Component {\n  font-weight: bold;\n}"
       }
     }
-    return {files: files};
+    return {files: files, errors: {}};
   },
 
-  onChange: function(value) {
-    this.setState({value: value});
+  onUpdate: function(file, content) {
+    console.log('onUpdate');
+    var errors = this.state.errors;
+    if (errors[file.filename] !== undefined) {
+      delete errors[file.filename];
+      this.setState({errors: errors});
+    }
+  },
+
+  onError: function(file, err) {
+    console.log('onError');
+    var errors = this.state.errors;
+    errors[file.filename] = err;
+    this.setState({errors: errors});
+  },
+
+  validate: function(file, content) {
+    if (/\.jsx?$/.exec(file.filename)) {
+      var deps = detective(content);
+      console.log(file.filename, deps);
+    }
   },
 
   render: function() {
     return (
       <div className="EditorPage">
         <Scene className="EditorPage__Scene"
+          errors={this.state.errors}
           example={this.state.files['example.jsx']}
           component={this.state.files['index.jsx']}
           styles={this.state.files['index.css']}
@@ -45,7 +66,9 @@ var EditorPage = ReactApp.createPage({
         <MultiEditor
           className="EditorPage__Editor"
           files={this.state.files}
-          onChange={this.onChange} />
+          validate={this.validate}
+          onError={this.onError}
+          onUpdate={this.onUpdate} />
       </div>
     );
   }
