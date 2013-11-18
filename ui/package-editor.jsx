@@ -3,6 +3,25 @@ var cx = require('react-tools/build/modules/cx');
 var map = require('lodash').map;
 var Editor = require('./editor.jsx');
 
+function guessModeByFilename(filename) {
+  var m = /\.(.+)$/.exec(filename);
+  if (m) {
+    var ext = m[1];
+  }
+  switch(m) {
+    case 'js':
+    case 'json':
+    case 'jsx':
+      return 'javascript';
+    case 'css':
+      return 'css';
+    case 'html':
+      return 'html';
+    default:
+      return '';
+  }
+}
+
 module.exports = React.createClass({
   getInitialState: function() {
     return {active: null};
@@ -20,7 +39,7 @@ module.exports = React.createClass({
   render: function() {
     var active = this.state.active ||
       this.props.active ||
-      'example.jsx';
+      'example.html';
 
     var tabs = map(this.props.files, function(file) {
       return {
@@ -39,7 +58,9 @@ module.exports = React.createClass({
           <div className="PackageEditor__Editor__filename">
             {file.filename}
           </div>
-          <Editor className="PackageEditor__Editor__CodeMirror" value={file.content || ''}
+          <Editor
+            value={file.content}
+            mode={guessModeByFilename(file.filename)}
             validate={this.props.validate && this.props.validate.bind(null, file)}
             onError={this.props.onError && this.props.onError.bind(null, file)}
             onUpdate={this.props.onUpdate && this.props.onUpdate.bind(null, file)}

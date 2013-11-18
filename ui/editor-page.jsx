@@ -34,7 +34,7 @@ module.exports = ReactApp.createPage({
     return {
       errors: {},
       project: proj,
-      active: 'example.jsx'
+      active: project.getExample(proj).filename
     };
   },
 

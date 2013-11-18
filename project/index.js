@@ -19,7 +19,7 @@ function create(name) {
 
     style: 'index.css',
     main: 'index.jsx',
-    example: 'example.jsx'
+    example: 'example.html'
   };
 
   return {
@@ -35,8 +35,8 @@ function create(name) {
         displayName: 'Styles',
         content: ''
       },
-      'example.jsx': {
-        filename: 'example.jsx',
+      'example.html': {
+        filename: 'example.html',
         displayName: 'Example',
         content: ''
       },
