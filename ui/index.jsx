@@ -2,6 +2,7 @@ var ReactApp = require('react-app');
 var React = require('react-tools/build/modules/React');
 var detective = require('detective');
 
+var project = require('../project');
 var MultiEditor = require('./multi-editor.jsx');
 var Scene = require('./scene.jsx');
 
@@ -10,24 +11,22 @@ require('./index.css');
 var EditorPage = ReactApp.createPage({
 
   getInitialState: function() {
+    var proj = project.create('unnamed');
     var files = {
       'example.jsx': {
         filename: 'example.jsx',
-        displayName: 'example',
         content: '<Component>Hello, world</Component>'
       },
       'index.jsx': {
         filename: 'index.jsx',
-        displayName: 'component',
         content: "var React = require('react-core');\n\nmodule.exports = React.createClass({});\n"
       },
       'index.css': {
         filename: 'index.css',
-        displayName: 'styles',
         content: ".Component {\n  font-weight: bold;\n}"
       }
     }
-    return {files: files, errors: {}};
+    return {files: files, errors: {}, proj: proj};
   },
 
   onUpdate: function(file, content) {
@@ -65,7 +64,7 @@ var EditorPage = ReactApp.createPage({
           />
         <MultiEditor
           className="EditorPage__Editor"
-          files={this.state.files}
+          files={this.state.proj.files}
           validate={this.validate}
           onError={this.onError}
           onUpdate={this.onUpdate} />
