@@ -1,0 +1,11 @@
+@import "./theme.css";
+
+@macro border-left-only {
+  border: none;
+  border-left: $1 $2 $3;
+}
+
+@macro border-top-only {
+  border: none;
+  border-top: $1 $2 $3;
+}

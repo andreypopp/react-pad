@@ -3,6 +3,8 @@
 @import "normalize-css/normalize.css";
 @import "codemirror/lib/codemirror.css";
 
+@import "./theme.css";
+@import "./macro.css";
 @import "./package-browser.css";
 @import "./package-editor.css";
 @import "./scene.css";
@@ -14,7 +16,7 @@
 }
 
 body {
-  background: #fafafa;
-  color: #444;
-  font-family: 'Source Sans Pro', sans-serif;
+  background: var(background);
+  color: var(color);
+  font-family: var(font-family);
 }

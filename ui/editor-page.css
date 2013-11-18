@@ -5,13 +5,13 @@
 }
 
 .EditorPage__Browser {
+  extend: .has-shadow;
   position: absolute;
   z-index: 1001;
   right: -200px;
   top: 0;
-  background: #fafafa;
+  background: var(background);
 
-  box-shadow: 0px 0px 5px #eee;
   width: 300px;
   height: 100%;
 
@@ -23,10 +23,9 @@
 }
 
 .EditorPage__Editor {
-  font-size: 90%;
-  box-shadow: 0px 0px 5px #eee;
-  border: none;
-  border-top: 1px solid #eee;
+  extend: .has-shadow;
+  font-size: var(font-size-small);
+  border-top-only: 1px solid var(border-color);
 
   position: absolute;
 
@@ -50,8 +49,7 @@
 
 @media only screen and (min-width: 768px) {
   .EditorPage__Editor {
-    border: none;
-    border-left: 1px solid #eee;
+    border-left-only: 1px solid var(border-color);
     height: 100%;
     width: 50%;
     top: 0;

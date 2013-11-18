@@ -13,15 +13,17 @@
 
 .PackageEditor__Editor__filename {
   text-align: right;
-  font-family: Menlo, Monaco, monospace;
-  padding: 3px;
-  color: #aaa;
+  font-family: var(font-family-monospace);
+  padding: var(padding-small);
+  color: var(color-light);
   border: 1px solid #ddd;
   cursor: default;
-  font-size: 70%;
+  font-size: var(font-size-small);
   position: absolute;
   z-index: 1000;
   bottom: 5px;
   left: 10px;
+
+  user-select: none;
 }
 

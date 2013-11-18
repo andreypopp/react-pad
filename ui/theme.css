@@ -1,0 +1,37 @@
+:root {
+  var-font-family-monospace: Menlo, Monaco, monospace;
+  var-font-family: 'Source Sans Pro', sans-serif;
+  var-font-size: 100%;
+  var-font-size-small: 80%;
+
+  var-color: #444;
+  var-color-light: #aaa;
+  var-color-editor: #969696;
+
+  var-border-color: #eee;
+
+  var-background: #fafafa;
+  var-background-dark: #eee;
+  var-background-error: rgb(255, 226, 226);
+
+  var-padding-v: 5px;
+  var-padding-h: 10px;
+  var-padding: var(padding-v) var(padding-h);
+  var-padding-small: var(padding-v) var(padding-v);
+  var-padding-large: var(padding-h) var(padding-h);
+
+  var-shadow: 0px 0px 5px #eee;
+}
+
+.shadowed {
+  color: var(color-light);
+}
+
+.highlighted {
+  color: var(color);
+  background: var(background-dark);
+}
+
+.has-shadow {
+  box-shadow: var(shadow);
+}

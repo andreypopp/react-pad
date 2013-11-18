@@ -33,6 +33,11 @@
     "lodash": "~2.3.0",
     "detective": "~2.2.0",
     "browserify": "~2.35.4",
-    "kew": "~0.3.0"
+    "kew": "~0.3.0",
+    "rework-vars": "~1.0.1",
+    "autoprefixer": "~0.8.20131104",
+    "rework": "~0.18.3",
+    "rework-inherit": "~0.2.1",
+    "rework-macro": "~0.1.2"
   }
 }

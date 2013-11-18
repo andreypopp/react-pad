@@ -34,6 +34,15 @@ function createAPI(options) {
 }
 
 function createUI(options) {
+  options.cssTransform = []
+    .concat(options.cssTransform)
+    .concat([
+      'xcss/transforms/autoprefixer',
+      'xcss/transforms/vars',
+      'xcss/transforms/extend',
+      'rework-macro'
+    ])
+    .filter(Boolean);
   return ReactApp(require.resolve('./ui/index.jsx'), options);
 }
 
@@ -47,7 +56,7 @@ function createApp(options) {
     })
   });
 
-  app.use('/browserify', browserifyAPI({directory: '.'}));
+  app.use('/browserify', browserifyAPI({directory: '.browserify-api'}));
   app.use('/api', createAPI(options));
   app.use('/auth', createAuth(options));
   app.use(createUI(options));

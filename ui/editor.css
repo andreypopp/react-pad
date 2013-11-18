@@ -1,7 +1,7 @@
 .CodeMirror {
-  background: #fafafa;
-  color: #969696;
-  font-family: Menlo, Monaco, monospace;
+  background: var(background);
+  color: var(color-editor);
+  font-family: var(font-family-monospace);
   height: 100%;
-  padding: 5px;
+  padding: var(padding-small);
 }
