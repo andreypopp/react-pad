@@ -66,18 +66,27 @@ function updateDependencies(proj, changedFilenames) {
          changedFilenames.indexOf(filename) > -1))
       deps = deps.concat(detective(proj.files[filename].content));
 
-  for (var i = 0, len = deps.length; i < len; i++) {
-    if (!proj.meta.dependencies[deps[i]])
-      proj.meta.dependencies[deps[i]] = '*';
-  }
+  deps.forEach(function(dep) {
+    if (dep[0] === '.' && dep[0] === '/')
+      return;
+    dep = dep.split('/').filter(Boolean)[0];
+    console.log('dep', dep, proj.meta.dependencies);
+    if (proj.meta.dependencies[dep] === undefined)
+      proj.meta.dependencies[dep] = '*';
+  });
 
-  proj.files['package.json'].content = jsonStringifyPretty(proj.meta);
+  metaChanged(proj);
 }
 
 function fileChanged(proj, file) {
   proj.files[file.filename] = file;
   updateDependencies(proj, [file.filename]);
   return proj;
+}
+
+function metaChanged(proj) {
+  console.log(proj.meta);
+  proj.files['package.json'].content = jsonStringifyPretty(proj.meta);
 }
 
 function getEntryPoint(name, fallbacks, proj) {
@@ -103,6 +112,7 @@ InvalidProjectError.prototype = new Error;
 module.exports = {
   create: create,
   fileChanged: fileChanged,
+  metaChanged: metaChanged,
   updateDependencies: updateDependencies,
 
   getExample: getEntryPoint.bind(null, 'example', ['example.jsx', 'example.js']),

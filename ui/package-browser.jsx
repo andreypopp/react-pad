@@ -31,6 +31,9 @@ module.exports = React.createClass({
         <div className="PackageBrowser__files">
           {items}
         </div>
+        <div className="PackageBrowser__toolbar">
+          {this.props.children}
+        </div>
       </div>
     );
   }
