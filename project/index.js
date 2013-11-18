@@ -68,20 +68,23 @@ function updateDependencies(proj, changedFilenames) {
   var deps = [];
 
   for (var filename in proj.files) {
-    if (/\.jsx?$/.exec(filename) &&
-        (!changedFilenames || changedFilenames &&
-         changedFilenames.indexOf(filename) > -1)) {
-      var file = proj.files[filename];
-      file.dependencies = findModuleNames(file.content);
+    var file = proj.files[filename];
+    if (/\.jsx?$/.exec(filename)) {
+      if (!changedFilenames || changedFilenames &&
+          changedFilenames.indexOf(filename) > -1) {
+        file.dependencies = findModuleNames(file.content);
+      }
+      deps = deps.concat(file.dependencies);
     }
-    deps = deps.concat(file.dependencies);
   }
 
+  // check if we have something new
   deps.forEach(function(dep) {
     if (proj.meta.dependencies[dep] === undefined)
       proj.meta.dependencies[dep] = '*';
   });
 
+  // check if we need to remove old deps
   Object.keys(proj.meta.dependencies).forEach(function(dep) {
     if (deps.indexOf(dep) === -1)
       delete proj.meta.dependencies[dep];
