@@ -50,6 +50,12 @@ function create(name) {
 
 }
 
+function findModuleNames(source) {
+  return detective(source)
+    .filter(function(m) { return m[0] !== '.' && m[0] !== '/'; })
+    .map(function(m) { return m.split('/').filter(Boolean)[0]; });
+}
+
 /**
  * Update project with dependencies extracted from sources
  *
@@ -58,21 +64,27 @@ function create(name) {
  *                                          to parse dependencies from
  */
 function updateDependencies(proj, changedFilenames) {
+
   var deps = [];
 
-  for (var filename in proj.files)
+  for (var filename in proj.files) {
     if (/\.jsx?$/.exec(filename) &&
         (!changedFilenames || changedFilenames &&
-         changedFilenames.indexOf(filename) > -1))
-      deps = deps.concat(detective(proj.files[filename].content));
+         changedFilenames.indexOf(filename) > -1)) {
+      var file = proj.files[filename];
+      file.dependencies = findModuleNames(file.content);
+    }
+    deps = deps.concat(file.dependencies);
+  }
 
   deps.forEach(function(dep) {
-    if (dep[0] === '.' && dep[0] === '/')
-      return;
-    dep = dep.split('/').filter(Boolean)[0];
-    console.log('dep', dep, proj.meta.dependencies);
     if (proj.meta.dependencies[dep] === undefined)
       proj.meta.dependencies[dep] = '*';
+  });
+
+  Object.keys(proj.meta.dependencies).forEach(function(dep) {
+    if (deps.indexOf(dep) === -1)
+      delete proj.meta.dependencies[dep];
   });
 
   metaChanged(proj);
