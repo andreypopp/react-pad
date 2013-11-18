@@ -1,9 +1,27 @@
 function update(data) {
-  if (data.styles)
-    updateStyles(data.styles);
+  updateStyles(data.styles);
+  updateDeps(data.deps);
+  updateCode(data.component);
+}
+
+function updateDeps(deps) {
+  if (!deps) return;
+
+  deps.sort();
+
+  var host = document.getElementById('deps');
+  if (!host) {
+    host = document.createElement('script');
+    host.id = 'deps';
+    document.head.appendChild(host);
+  }
+  host.src = '/browserify/partial?modules=' +
+    encodeURIComponent(deps.join(' '));
 }
 
 function updateStyles(styles) {
+  if (!styles) return;
+
   var host = document.getElementById('styles');
   if (!host) {
     host = document.createElement('style');
