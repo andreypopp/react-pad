@@ -7,9 +7,19 @@ function debug() {
 function update(msg) {
   debug('updating');
   updateStyle(msg.style);
-  updateDependencies(msg.dependencies);
-  //updateCode(data.main);
-  //updateExample(data.example);
+  //updateDependencies(msg.dependencies);
+  updateMain(msg.main);
+  updateExample(msg.example);
+}
+
+function updateExample(example) {
+  debug('updating example:', example);
+  eval(example.content);
+}
+
+function updateMain(main) {
+  debug('updating main:', main);
+  eval(main.content);
 }
 
 function updateDependencies(deps) {

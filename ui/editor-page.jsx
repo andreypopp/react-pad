@@ -23,6 +23,7 @@ var EditorAPI = {
     this.debug('edit', file.filename);
     this.setState({active: file.filename});
   }
+
 };
 
 module.exports = ReactApp.createPage({
