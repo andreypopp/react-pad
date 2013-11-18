@@ -1,4 +1,7 @@
-var React = require('react-tools/build/modules/React');
+var React       = require('react-tools/build/modules/React');
+
+var makeLogger  = require('./logger');
+var project     = require('../project');
 
 var Errors = React.createClass({
   render: function() {
@@ -16,6 +19,8 @@ var Errors = React.createClass({
 });
 
 module.exports = React.createClass({
+  mixins: [makeLogger('Scene')],
+
   render: function() {
     return this.transferPropsTo(
       <div className="Scene">
@@ -26,13 +31,17 @@ module.exports = React.createClass({
   },
 
   update: function() {
-    var msg = JSON.stringify({
-      example: this.props.example,
-      component: this.props.component,
-      styles: this.props.styles
-    });
     var frame = this.refs.frame.getDOMNode();
-    frame.contentWindow.postMessage(msg, '*');
+    var proj = this.props.project;
+    this.debug('composing message');
+    var msg = {
+      main: project.getMain(proj),
+      example: project.getExample(proj),
+      style: project.getStyle(proj),
+      dependencies: proj.meta.dependencies
+    };
+    this.debug('ready to send a message', msg);
+    frame.contentWindow.postMessage(JSON.stringify(msg), '*');
   },
 
   componentDidMount: function() {

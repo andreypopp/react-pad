@@ -51,6 +51,8 @@ module.exports = React.createClass({
         this.props.onError(error)
       else if (error === undefined && this.props.onUpdate)
         this.props.onUpdate(value);
+    } else if (this.props.onUpdate) {
+      this.props.onUpdate(value);
     }
   },
 

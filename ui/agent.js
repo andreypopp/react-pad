@@ -1,11 +1,24 @@
-function update(data) {
-  updateStyles(data.styles);
-  updateDeps(data.deps);
-  updateCode(data.component);
+function debug() {
+  var args = Array.prototype.slice.call(arguments);
+  args.unshift('[Scene Frame]')
+  console.debug.apply(console, args);
 }
 
-function updateDeps(deps) {
-  if (!deps) return;
+function update(msg) {
+  debug('updating');
+  updateStyle(msg.style);
+  updateDependencies(msg.dependencies);
+  //updateCode(data.main);
+  //updateExample(data.example);
+}
+
+function updateDependencies(deps) {
+  debug('updating dependencies:', deps);
+
+  deps = Object.keys(deps);
+
+  if (deps.length === 0)
+    return;
 
   deps.sort();
 
@@ -19,23 +32,23 @@ function updateDeps(deps) {
     encodeURIComponent(deps.join(' '));
 }
 
-function updateStyles(styles) {
-  if (!styles) return;
+function updateStyle(style) {
+  debug('updating styles:', style);
 
-  var host = document.getElementById('styles');
+  var host = document.getElementById('style');
   if (!host) {
     host = document.createElement('style');
-    host.id = 'styles';
+    host.id = 'style';
     document.head.appendChild(host);
   }
-  host.innerHTML = styles.content;
+  host.innerHTML = style.content;
 }
 
 window.addEventListener("message", function (e) {
   var mainWindow = e.source;
   try {
-    var data = JSON.parse(e.data);
-    update(data);
+    var msg = JSON.parse(e.data);
+    update(msg);
   } catch (e) {
     var result = "eval() threw an exception:" + e.toString();
     mainWindow.postMessage(result, event.origin);

@@ -14,9 +14,9 @@ function create(name) {
     name: name,
     dependencies: {},
 
-    style: './index.css',
-    main: './index.jsx',
-    example: './example.jsx'
+    style: 'index.css',
+    main: 'index.jsx',
+    example: 'example.jsx'
   };
 
   return {
@@ -71,7 +71,40 @@ function updateDependencies(proj, changedFilenames) {
   proj.files['package.json'].content = jsonStringifyPretty(proj.meta);
 }
 
+function fileChanged(proj, file) {
+  proj.files[file.filename] = file;
+  updateDependencies(proj, [file.filename]);
+  return proj;
+}
+
+function getEntryPoint(name, fallbacks, proj) {
+  var filename = proj.meta[name];
+
+  while (!proj.files[filename] && fallbacks.length > 0)
+    filename = fallbacks.shift();
+
+  if (!proj.files[filename])
+    throw new InvalidProjectError('cannot load "' + name + '" entry point');
+
+  return proj.files[filename];
+}
+
+function InvalidProjectError(msg) {
+  Error.call(this, msg);
+  this.msg = msg;
+  this.name = 'InvalidProjectError';
+}
+
+InvalidProjectError.prototype = new Error;
+
 module.exports = {
   create: create,
-  updateDependencies: updateDependencies
+  fileChanged: fileChanged,
+  updateDependencies: updateDependencies,
+
+  getExample: getEntryPoint.bind(null, 'example', ['example.jsx', 'example.js']),
+  getMain: getEntryPoint.bind(null, 'main', ['index.jsx', 'index.js']),
+  getStyle: getEntryPoint.bind(null, 'style', ['index.css']),
+
+  InvalidProjectError: InvalidProjectError,
 };
