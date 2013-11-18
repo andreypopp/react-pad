@@ -39,7 +39,7 @@ module.exports = React.createClass({
           <div className="PackageEditor__Editor__filename">
             {file.filename}
           </div>
-          <Editor value={file.content || ''}
+          <Editor className="PackageEditor__Editor__CodeMirror" value={file.content || ''}
             validate={this.props.validate && this.props.validate.bind(null, file)}
             onError={this.props.onError && this.props.onError.bind(null, file)}
             onUpdate={this.props.onUpdate && this.props.onUpdate.bind(null, file)}
