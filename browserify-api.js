@@ -29,7 +29,7 @@ function createApp(opts) {
   return app;
 
   function buildPartial(modules) {
-    var key = getBundleKey(modules);
+    var key = getKey(modules);
     var build = builds[key] || kew.resolve();
 
     return build
@@ -62,7 +62,7 @@ function createApp(opts) {
     return modules;
   }
 
-  function getBundleKey(modules) {
+  function getKey(modules) {
     return crypto.createHash('sha1')
       .update(modules.join('_'))
       .digest('hex');
