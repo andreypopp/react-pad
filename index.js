@@ -1,7 +1,6 @@
 var fs = require('fs');
 var ReactApp = require('react-app');
 var express = require('express');
-var browserifyAPI = require('./browserify-api');
 
 function createAuth(options) {
   var app = express();
@@ -56,7 +55,6 @@ function createApp(options) {
     })
   });
 
-  app.use('/browserify', browserifyAPI({directory: '.browserify-api'}));
   app.use('/api', createAPI(options));
   app.use('/auth', createAuth(options));
   app.use(createUI(options));

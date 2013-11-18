@@ -26,7 +26,6 @@
     "jshint": "~2.3.0",
     "normalize-css": "~2.2.0",
     "detective": "~2.2.0",
-    "brfs": "0.0.8",
     "browserify": "~2.35.4",
     "rework-inherit": "~0.2.1",
     "rework-macro": "~0.1.2",

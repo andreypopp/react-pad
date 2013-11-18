@@ -28,17 +28,55 @@ function create(name) {
       'index.jsx': {
         filename: 'index.jsx',
         displayName: 'Component',
-        content: ''
+        content: [
+          'var React = require("react-tools/build/modules/React");',
+          '',
+          'module.exports = React({',
+          '  render: function() {',
+          '    return (',
+          '      <div className="Component">',
+          '        Hello, {this.props.name}!',
+          '      </div>',
+          '    )',
+          '  }',
+          '});'
+        ].join('\n')
       },
       'index.css': {
         filename: 'index.css',
         displayName: 'Styles',
-        content: ''
+        content: [
+          '.Component {',
+          '  background: #444;',
+          '}'
+        ].join('\n')
       },
       'example.html': {
         filename: 'example.html',
         displayName: 'Example',
-        content: ''
+        content: [
+          '<!doctype>',
+          '<html>',
+          '<head>',
+          '  <title>Component Example</title>',
+          '  <link rel="stylesheet" href="bundle.css">',
+          '  <style>',
+          '    body {',
+          '      padding: 10px;',
+          '    }',
+          '  </style>',
+          '  <script src="bundle.js"></script>',
+          '  <script>',
+          '    var React = require("react-tools/build/modules/React");',
+          '    var Component = require("./index.jsx");',
+          '',
+          '    React.renderComponent(Component({name: "You"}), document.body);',
+          '  </script>',
+          '</head>',
+          '<body>',
+          '</body>',
+          '</html>'
+        ].join('\n')
       },
       'package.json': {
         filename: 'package.json',
