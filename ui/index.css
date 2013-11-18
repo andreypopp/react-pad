@@ -2,6 +2,10 @@
 @import "normalize-css/normalize.css";
 @import "codemirror/lib/codemirror.css";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: #fafafa;
   color: #444;
@@ -19,6 +23,7 @@ body {
 
 .TabBar__Button {
   color: #ccc;
+  user-select: none;
 }
 
 .TabBar__Button--active {
@@ -57,7 +62,6 @@ body {
 }
 
 .MultiEditor__Editor {
-  margin-top: 30px;
   display: none;
   position: relative;
 }
