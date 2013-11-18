@@ -3,5 +3,5 @@
   color: var(color-editor);
   font-family: var(font-family-monospace);
   height: 100%;
-  padding: var(padding-small);
+  padding: var(padding-large);
 }

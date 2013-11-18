@@ -21,6 +21,11 @@
   var-padding-large: var(padding-h) var(padding-h);
 
   var-shadow: 0px 0px 5px #eee;
+
+  var-package-browser-width: 100px;
+  var-package-browser-width-expand: 300px;
+  /* TODO: use rework-math for that */
+  var-package-browser-right: -200px; 
 }
 
 .shadowed {

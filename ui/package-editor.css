@@ -11,6 +11,9 @@
   display: block;
 }
 
+.PackageEditor__Editor__CodeMirror {
+}
+
 .PackageEditor__Editor__filename {
   text-align: right;
   font-family: var(font-family-monospace);
