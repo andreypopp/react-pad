@@ -31,6 +31,8 @@
     "react-tools": "~0.5.1",
     "react-app": "~0.8.1",
     "lodash": "~2.3.0",
-    "detective": "~2.2.0"
+    "detective": "~2.2.0",
+    "browserify": "~2.35.4",
+    "kew": "~0.3.0"
   }
 }
