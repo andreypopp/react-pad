@@ -25,20 +25,20 @@
     "mocha": "~1.14.0",
     "jshint": "~2.3.0",
     "normalize-css": "~2.2.0",
-    "detective": "~2.2.0"
+    "detective": "~2.2.0",
+    "brfs": "0.0.8",
+    "browserify": "~2.35.4",
+    "rework-inherit": "~0.2.1",
+    "rework-macro": "~0.1.2",
+    "rework-vars": "~1.0.1",
+    "autoprefixer": "~0.8.20131104"
   },
   "dependencies": {
     "react-tools": "~0.5.1",
     "react-app": "~0.8.1",
     "lodash": "~2.3.0",
     "detective": "~2.2.0",
-    "browserify": "~2.35.4",
     "kew": "~0.3.0",
-    "rework-vars": "~1.0.1",
-    "autoprefixer": "~0.8.20131104",
-    "rework": "~0.18.3",
-    "rework-inherit": "~0.2.1",
-    "rework-macro": "~0.1.2",
     "github-api": "~0.7.0"
   }
 }
