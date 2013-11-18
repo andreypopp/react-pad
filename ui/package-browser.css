@@ -1,0 +1,36 @@
+.PackageBrowser__meta {
+  padding: 10px;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.PackageBrowser__name {
+  font-weight: bold;
+}
+
+.PackageBrowser__version {
+  float: right;
+}
+
+.PackageBrowser__description {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 80%;
+}
+
+.PackageBrowser__file {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.PackageBrowser__file--active,
+.PackageBrowser__file:hover {
+  color: #444;
+  background: #eee;
+}
+
+.PackageBrowser__files {
+  font-family: Menlo, Monaco, monospace;
+  font-size: 80%;
+  color: #aaa;
+}

@@ -12,6 +12,9 @@ function jsonStringifyPretty(obj) {
 function create(name) {
   var meta = {
     name: name,
+    version: '0.0.0',
+    description: 'React component',
+
     dependencies: {},
 
     style: 'index.css',

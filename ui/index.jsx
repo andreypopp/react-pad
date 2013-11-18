@@ -1,21 +1,45 @@
-var ReactApp    = require('react-app');
-var React       = require('react-tools/build/modules/React');
-var detective   = require('detective');
-var assign      = require('lodash').assign;
+var ReactApp        = require('react-app');
+var React           = require('react-tools/build/modules/React');
+var cx              = require('react-tools/build/modules/cx');
+var detective       = require('detective');
 
-var project     = require('../project');
-var makeLogger  = require('./logger');
-var MultiEditor = require('./multi-editor.jsx');
-var Scene       = require('./scene.jsx');
+var project         = require('../project');
+var makeLogger      = require('./logger');
+var PackageEditor   = require('./package-editor.jsx');
+var PackageBrowser  = require('./package-browser.jsx');
+var Scene           = require('./scene.jsx');
 
 require('./index.css');
 
+
+var EditorAPI = {
+
+  showBrowser: function() {
+    var node = this.refs.browser.getDOMNode();
+    node.classList.add('EditorPage__Browser--active');
+  },
+
+  hideBrowser: function() {
+    var node = this.refs.browser.getDOMNode();
+    node.classList.remove('EditorPage__Browser--active');
+  },
+
+  edit: function(file) {
+    this.debug('edit', file.filename);
+    this.setState({active: file.filename});
+  }
+};
+
 var EditorPage = ReactApp.createPage({
-  mixins: [makeLogger('EditorPage')],
+  mixins: [makeLogger('EditorPage'), EditorAPI],
 
   getInitialState: function() {
     var proj = project.create('unnamed');
-    return {errors: {}, project: proj};
+    return {
+      errors: {},
+      project: proj,
+      active: 'example.jsx'
+    };
   },
 
   onUpdate: function(file) {
@@ -33,10 +57,19 @@ var EditorPage = ReactApp.createPage({
           project={this.state.project}
           errors={this.state.errors}
           />
-        <MultiEditor
+        <PackageEditor
+          active={this.state.active}
           className="EditorPage__Editor"
           files={this.state.project.files}
           onUpdate={this.onUpdate} />
+        <PackageBrowser ref="browser"
+          onMouseEnter={this.showBrowser}
+          onMouseLeave={this.hideBrowser}
+
+          active={this.state.active}
+          onFileClick={this.edit}
+          className="EditorPage__Browser"
+          project={this.state.project} />
       </div>
     );
   }
