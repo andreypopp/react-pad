@@ -6,17 +6,16 @@ var makeLogger      = require('./logger');
 var PackageEditor   = require('./package-editor.jsx');
 var PackageBrowser  = require('./package-browser.jsx');
 var Scene           = require('./scene.jsx');
+var ShowHide        = require('./show-hide.jsx');
 
 var EditorAPI = {
 
   showBrowser: function() {
-    var node = this.refs.browser.getDOMNode();
-    node.classList.add('EditorPage__Browser--active');
+    this.setState({browserShown: true});
   },
 
   hideBrowser: function() {
-    var node = this.refs.browser.getDOMNode();
-    node.classList.remove('EditorPage__Browser--active');
+    this.setState({browserShown: false});
   },
 
   edit: function(file) {
@@ -34,7 +33,8 @@ module.exports = ReactApp.createPage({
     return {
       errors: {},
       project: proj,
-      active: project.getExample(proj).filename
+      active: project.getExample(proj).filename,
+      browserShown: false
     };
   },
 
@@ -58,14 +58,16 @@ module.exports = ReactApp.createPage({
           className="EditorPage__Editor"
           files={this.state.project.files}
           onUpdate={this.onUpdate} />
-        <PackageBrowser ref="browser"
-          onMouseEnter={this.showBrowser}
-          onMouseLeave={this.hideBrowser}
-
-          active={this.state.active}
-          onFileClick={this.edit}
+        <ShowHide
           className="EditorPage__Browser"
-          project={this.state.project} />
+          show={this.state.browserShown}
+          onMouseEnter={this.showBrowser}
+          onMouseLeave={this.hideBrowser}>
+          <PackageBrowser
+            active={this.state.active}
+            onFileClick={this.edit}
+            project={this.state.project} />
+        </ShowHide>
       </div>
     );
   }

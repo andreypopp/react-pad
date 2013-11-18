@@ -7,6 +7,7 @@ var kew = require('kew');
 var express = require('express');
 var browserify = require('browserify');
 var mktemp = require('mktemp');
+var writeFileTransaction = require('./fs-write-file-transaction');
 var npm = require('npm');
 
 function createApp(opts) {
@@ -22,6 +23,7 @@ function createApp(opts) {
     var modules = parseModules(req.query.modules);
 
     buildPartial(modules).then(function(bundle) {
+      res.setHeader('Content-type', 'application/javascript');
       res.send(bundle);
     }, next);
   });
@@ -29,7 +31,7 @@ function createApp(opts) {
   return app;
 
   function buildPartial(modules) {
-    var key = getKey(modules);
+    var key = getKey(modules, 'partial');
     var build = builds[key] || kew.resolve();
 
     return build
@@ -62,8 +64,8 @@ function createApp(opts) {
     return modules;
   }
 
-  function getKey(modules) {
-    return crypto.createHash('sha1')
+  function getKey(modules, prefix) {
+    return (prefix ?  prefix + '_' : '') + crypto.createHash('sha1')
       .update(modules.join('_'))
       .digest('hex');
   }
@@ -126,6 +128,7 @@ function promisify(func) {
 var createTempFile = promisify(mktemp.createFile);
 var writeFile = promisify(fs.writeFile);
 var rename = promisify(fs.rename);
+var writeFileTransaction = promisify(writeFileTransaction);
 
 function writeFileTransaction() {
   var args = Array.prototype.slice.call(arguments, 0);
