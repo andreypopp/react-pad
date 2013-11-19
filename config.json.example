@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "clientID": null,
+    "clientSecret": null,
+    "callbackURL": "http://127.0.0.1:3000/auth/github/callback"
+  },
+
+  "secret": null,
+  "debug": true,
+  "watch": true
+}

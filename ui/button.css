@@ -1,0 +1,18 @@
+@import "./theme.css";
+
+.Button {
+  extend: .shadowed;
+  text-decoration: none;
+  padding: var(padding);
+  cursor: pointer;
+  user-select: none;
+}
+
+.Button:hover,
+.Button--active {
+  extend: .highlighted;
+}
+
+.Button__icon {
+  margin-right: var(padding-h);
+}

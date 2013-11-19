@@ -1,7 +1,7 @@
 BIN = ./node_modules/.bin
 
 run:
-	@./react-pad
+	@./react-pad --debug ./config.json
 
 install link:
 	@npm $@

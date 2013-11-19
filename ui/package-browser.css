@@ -4,6 +4,14 @@
   margin-bottom: 20px;
 }
 
+.PackageBrowser__gist {
+  extend: .shadowed-link;
+  font-size: var(font-size-small);
+}
+.PackageBrowser__gist:hover {
+  text-decoration: underline;
+}
+
 .PackageBrowser__name {
   font-weight: bold;
 }
@@ -18,19 +26,15 @@
   font-size: var(font-size-small);
 }
 
-.PackageBrowser__file {
-  extend: .shadowed;
-  padding: var(padding);
-  cursor: pointer;
-  user-select: none;
+.PackageBrowser__toolbar {
+  margin: var(padding-h) 0;
 }
 
-.PackageBrowser__file--active,
-.PackageBrowser__file:hover {
-  extend: .highlighted;
+.PackageBrowser__toolbar .Button {
+  display: block;
 }
 
-.PackageBrowser__files {
+.FileBrowser {
   font-family: var(font-family-monospace);
   font-size: var(font-size-small);
   color: var(color-light);

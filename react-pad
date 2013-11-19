@@ -2,10 +2,62 @@
 "use strict";
 // vim: set ft=javascript:
 
+var fs = require('fs');
+var optimist = require('optimist')
+      .usage('Usage: react-pad [options] config')
+      .option('h', {
+        alias: 'help',
+        boolean: true,
+        describe: 'Show this message and exit'
+      })
+      .option('v', {
+        alias: 'version',
+        boolean: true,
+        describe: 'Print react-pad version and exit'
+      })
+      .option('d', {
+        alias: 'debug',
+        boolean: true,
+        describe: 'Emit source maps'
+      });
+
 var createApp = require('./index');
-var app = createApp({
-  debug: true,
-  watch: true
-});
+var argv = optimist.argv;
+
+if (argv.help)
+  return optimist.showHelp();
+
+if (argv.version)
+  return console.log(require('./package.json').version);
+
+if (!argv._[0])
+  error('provide configuration file as argument', true);
+
+var filename = argv._[0];
+
+if (!fs.existsSync(filename))
+  error('configuration file "' + filename + '" does not exists');
+
+try {
+  var cfg = JSON.parse(fs.readFileSync(filename, 'utf8'));
+} catch(err) {
+  error('cannot read configuration file "' + filename + '": ' + err.toString());
+}
+
+if (argv.debug && !cfg.debug) {
+  cfg.debug = true;
+  cfg.watch = true;
+}
+
+var app = createApp(cfg);
+
+function error(msg, showHelp) {
+  if (showHelp)
+    optimist.showHelp();
+  console.warn('error:', msg);
+  if (msg.stack)
+    console.warn(msg.stack);
+  process.exit(1);
+}
 
 app.listen(3000);

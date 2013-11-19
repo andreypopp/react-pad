@@ -32,6 +32,15 @@
   color: var(color-light);
 }
 
+.shadowed-link {
+  color: var(color-light);
+  text-decoration: none;
+}
+.shadowed-link--hover {
+  color: var(color);
+  text-decoration: underline;
+}
+
 .highlighted {
   color: var(color);
   background: var(background-dark);

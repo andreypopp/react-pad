@@ -11,6 +11,12 @@ module.exports = React.createClass({
     this.update();
   },
 
+  refresh: function() {
+    setTimeout(function() {
+      this.cm.refresh();
+    }.bind(this), 0);
+  },
+
   update: function() {
     if (this.cm) {
       this.cm.setValue(this.props.value);

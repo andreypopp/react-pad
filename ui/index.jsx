@@ -6,7 +6,8 @@ require('./index.css');
 
 module.exports = ReactApp.createApp({
   routes: {
-    '/': EditorPage
+    '/': EditorPage,
+    '/component/:id': EditorPage
   },
 
   appDidStart: function() {

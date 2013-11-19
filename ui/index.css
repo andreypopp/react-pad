@@ -2,6 +2,7 @@
 
 @import "normalize-css/normalize.css";
 @import "codemirror/lib/codemirror.css";
+@import "font-awesome/css/font-awesome.css";
 
 @import "./theme.css";
 @import "./macro.css";
@@ -10,6 +11,7 @@
 @import "./scene.css";
 @import "./editor.css";
 @import "./editor-page.css";
+@import "./button.css";
 
 * {
   box-sizing: border-box;

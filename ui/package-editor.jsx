@@ -36,6 +36,10 @@ module.exports = React.createClass({
     if (this.props.onChange) this.props.onChange(file);
   },
 
+  componentDidUpdate: function() {
+    this.refs.activeEditor.refresh();
+  },
+
   render: function() {
     var active = this.state.active ||
       this.props.active ||
@@ -60,6 +64,7 @@ module.exports = React.createClass({
           </div>
           <Editor
             value={file.content}
+            ref={active === file.filename ? 'activeEditor' : undefined}
             mode={guessModeByFilename(file.filename)}
             validate={this.props.validate && this.props.validate.bind(null, file)}
             onError={this.props.onError && this.props.onError.bind(null, file)}

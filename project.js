@@ -88,6 +88,19 @@ function create(name) {
 
 }
 
+function createFromFiles(files) {
+  var project = {files: {}};
+
+  for (var filename in files) {
+    project.files[filename] = {
+      filename: files[filename].filename,
+      content: files[filename].content
+    }
+  }
+  project.meta = JSON.parse(files['package.json'].content);
+  return project;
+}
+
 function findModuleNames(source) {
   return detective(source)
     .filter(function(m) { return m[0] !== '.' && m[0] !== '/'; })
@@ -138,7 +151,6 @@ function fileChanged(proj, file) {
 }
 
 function metaChanged(proj) {
-  console.log(proj.meta);
   proj.files['package.json'].content = jsonStringifyPretty(proj.meta);
 }
 
@@ -164,6 +176,8 @@ InvalidProjectError.prototype = new Error;
 
 module.exports = {
   create: create,
+  createFromFiles: createFromFiles,
+
   fileChanged: fileChanged,
   metaChanged: metaChanged,
   updateDependencies: updateDependencies,

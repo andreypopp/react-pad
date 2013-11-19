@@ -33,14 +33,12 @@ module.exports = React.createClass({
   update: function() {
     var frame = this.refs.frame.getDOMNode();
     var proj = this.props.project;
-    this.debug('composing message');
     var msg = {
       main: project.getMain(proj),
       example: project.getExample(proj),
       style: project.getStyle(proj),
       dependencies: proj.meta.dependencies
     };
-    this.debug('ready to send a message', msg);
     frame.contentWindow.postMessage(JSON.stringify(msg), '*');
   },
 

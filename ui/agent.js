@@ -5,7 +5,6 @@ function debug() {
 }
 
 function update(msg) {
-  debug('updating');
   updateStyle(msg.style);
   //updateDependencies(msg.dependencies);
   updateMain(msg.main);
@@ -13,18 +12,14 @@ function update(msg) {
 }
 
 function updateExample(example) {
-  debug('updating example:', example);
   eval(example.content);
 }
 
 function updateMain(main) {
-  debug('updating main:', main);
   eval(main.content);
 }
 
 function updateDependencies(deps) {
-  debug('updating dependencies:', deps);
-
   deps = Object.keys(deps);
 
   if (deps.length === 0)
@@ -43,8 +38,6 @@ function updateDependencies(deps) {
 }
 
 function updateStyle(style) {
-  debug('updating styles:', style);
-
   var host = document.getElementById('style');
   if (!host) {
     host = document.createElement('style');

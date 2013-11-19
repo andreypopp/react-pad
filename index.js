@@ -1,52 +1,38 @@
-var fs = require('fs');
-var ReactApp = require('react-app');
-var express = require('express');
+"use strict";
 
-function createAuth(options) {
-  var app = express();
-  app.get('/callback', function(req, res, next) {
-    var code = req.query.code;
-    if (!code) return res.send(401);
-    res.send([
-      '<!doctype html>',
-      '<script>',
-      '  window.opener.postMessage(code, window.location);',
-      '  window.close();',
-      '</script>'
-    ].join('\n'));
-  });
-  return app;
-}
+var fs        = require('fs');
+var ReactApp  = require('react-app');
+var express   = require('express');
+var passport  = require('passport');
+var auth      = require('./auth');
 
-function createAPI(options) {
-  var app = express();
-
-  app.get('/components', function(req, res, next) {
-
-  });
-
-  app.get('/components/:user/:name', function(req, res, next) {
-
-  });
-
-  return app;
-}
-
-function createUI(options) {
-  options.cssTransform = []
-    .concat(options.cssTransform)
+function createUI(opts) {
+  opts.cssTransform = []
+    .concat(opts.cssTransform)
     .concat([
       'xcss/transforms/autoprefixer',
       'xcss/transforms/vars',
+      'rework-macro',
       'xcss/transforms/extend',
-      'rework-macro'
-    ])
-    .filter(Boolean);
-  return ReactApp(require.resolve('./ui/index.jsx'), options);
+      'xcss-inline-woff'
+    ]);
+  return ReactApp(require.resolve('./ui/index.jsx'), opts);
 }
 
-function createApp(options) {
+function createApp(opts) {
   var app = express();
+
+  if (!opts.secret) {
+    console.warn('warning: no secret provided in config, on will be generated');
+    var rng = require('crypto').rng;
+    opts.secret = rng(32).toString('hex');
+  }
+
+  app.use(express.logger('dev'));
+  app.use(express.cookieParser());
+  app.use(express.session({secret: opts.secret}));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.get('/frame', function(req, res, next) {
     fs.readFile(require.resolve('./ui/agent.js'), 'utf8', function(err, src) {
@@ -55,9 +41,9 @@ function createApp(options) {
     })
   });
 
-  app.use('/api', createAPI(options));
-  app.use('/auth', createAuth(options));
-  app.use(createUI(options));
+  app.use('/auth', auth(opts.auth));
+  app.use(createUI(opts));
+
   return app;
 }
 
