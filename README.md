@@ -16,4 +16,4 @@ Authoring tool for React components
 You probably can't run it yet on your machine cause it depends on unreleased yet
 version of [react-app](https://github.com/andreypopp/react-app).
 
-![screenshot](/path/to/img.jpg)
+![screenshot](https://raw.github.com/andreypopp/react-pad/master/docs/screenshot.png)
