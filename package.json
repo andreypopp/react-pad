@@ -32,11 +32,11 @@
     "rework-vars": "~1.0.1",
     "autoprefixer": "~0.8.20131104",
     "font-awesome": "git+https://github.com/FortAwesome/Font-Awesome.git",
-    "xcss-inline-woff": "~0.1.0"
+    "xcss-inline-woff": "~0.2.0"
   },
   "dependencies": {
     "react-tools": "~0.5.1",
-    "react-app": "~0.8.1",
+    "react-app": "git://github.com/andreypopp/react-app",
     "lodash": "~2.3.0",
     "detective": "~2.2.0",
     "kew": "~0.3.0",

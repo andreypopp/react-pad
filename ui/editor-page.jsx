@@ -1,4 +1,3 @@
-var ReactApp        = require('react-app');
 var React           = require('react-tools/build/modules/React');
 var kew             = require('kew');
 
@@ -47,7 +46,7 @@ var EditorAPI = {
 
 };
 
-module.exports = ReactApp.createPage({
+module.exports = React.createClass({
   mixins: [makeLogger('EditorPage'), EditorAPI],
 
   getInitialState: function() {
