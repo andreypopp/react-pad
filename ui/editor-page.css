@@ -40,6 +40,11 @@
 
 }
 
+.EditorPage__Editor .PackageEditor__Editors,
+.EditorPage__Editor .PackageEditor__Editor {
+  height: 100%;
+}
+
 .EditorPage__Scene {
   height: 50%;
   width: 100%;
