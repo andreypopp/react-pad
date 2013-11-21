@@ -7,7 +7,7 @@ var passport  = require('passport');
 var auth      = require('./auth');
 
 function createUI(opts) {
-  opts.style = require.resolve('./ui/index.css');
+  opts.styles = require.resolve('./ui/index.css');
   opts.cssTransform = []
     .concat(opts.cssTransform)
     .concat([

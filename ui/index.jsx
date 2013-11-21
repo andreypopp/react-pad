@@ -2,7 +2,7 @@ var ReactApp    = require('react-app');
 var React       = require('react-tools/build/modules/React');
 var EditorPage  = require('./editor-page.jsx');
 
-module.exports = ReactApp.createApp({
+module.exports = ReactApp({
   '/': EditorPage,
   '/component/:id': EditorPage
 }, {
