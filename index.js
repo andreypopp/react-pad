@@ -8,6 +8,7 @@ var auth      = require('./auth');
 
 function createUI(opts) {
   opts.styles = require.resolve('./ui/index.css');
+  opts.logger = console;
   opts.cssTransform = []
     .concat(opts.cssTransform)
     .concat([
